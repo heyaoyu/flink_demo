@@ -12,8 +12,8 @@ import org.apache.flink.util.Collector
 import java.util.*
 
 // sudo /opt/flink-1.14.2/bin/start-cluster.sh
-// sudo /opt/flink-1.14.2/bin/flink run ~/IdeaProjects/flink_demo/target/flink_demo-1.0-SNAPSHOT-jar-with-dependencies.jar
-// cat /opt/flink-1.14.2/log/flink-root-taskexecutor-0-heyaoyudeMacBook-Pro.local.out
+// sudo /opt/flink-1.14.2/bin/flink run ~${project_dir}/target/flink_demo-1.0-SNAPSHOT-jar-with-dependencies.jar
+// cat /opt/flink-1.14.2/log/*.out
 // sudo /opt/flink-1.14.2/bin/stop-cluster.sh
 
 // <main.class>org.example.FlinkMainKt</main.class>
