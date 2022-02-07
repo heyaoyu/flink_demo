@@ -24,9 +24,7 @@ fun main(args: Array<String>) {
     ds.print("ds")
     val autoSource = env.addSource(AutoSource(), "auto")
     autoSource.print("auto")
-    val ks = autoSource.keyBy(object : KeySelector<Entity, String> {
-        override fun getKey(entity: Entity): String = entity.name
-    })
+    val ks = autoSource.keyBy { entity -> entity.name }
     ks.process(object : KeyedProcessFunction<String, Entity, Int>() {
         lateinit var valueState: ValueState<Int>
 
@@ -52,7 +50,7 @@ val random = Random()
 class AutoSource() : SourceFunction<Entity> {
 
     override fun run(context: SourceFunction.SourceContext<Entity>?) {
-        for (i in 1..10) {
+        for (i in 1..100) {
             val rdm = random.nextInt(10)
             context?.collect(Entity("auto_${rdm % 2}", rdm))
             Thread.sleep(1000)
