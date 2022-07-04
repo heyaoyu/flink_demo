@@ -3,6 +3,7 @@ package org.example
 import org.apache.flink.api.common.state.ValueState
 import org.apache.flink.api.common.state.ValueStateDescriptor
 import org.apache.flink.api.common.typeinfo.TypeInformation
+import org.apache.flink.api.java.functions.KeySelector
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction
@@ -23,7 +24,12 @@ fun main(args: Array<String>) {
     ds.print("ds")
     val autoSource = env.addSource(AutoSource(), "auto")
     autoSource.print("auto")
-    val ks = autoSource.keyBy { entity -> entity.name }
+    val ks = autoSource.keyBy(object : KeySelector<Entity, String> {
+        override fun getKey(entity: Entity?): String {
+            return entity?.name ?: ""
+        }
+
+    })
     ks.process(object : KeyedProcessFunction<String, Entity, Int>() {
         lateinit var valueState: ValueState<Int>
 
